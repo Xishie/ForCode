@@ -1,0 +1,81 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "Clusterm346"
+        },
+        "location": {
+            "value": "switzerlandnorth"
+        },
+        "dnsPrefix": {
+            "value": "Clusterm346-dns"
+        },
+        "osDiskSizeGB": {
+            "value": 0
+        },
+        "kubernetesVersion": {
+            "value": "1.25.6"
+        },
+        "networkPlugin": {
+            "value": "kubenet"
+        },
+        "enableRBAC": {
+            "value": true
+        },
+        "vmssNodePool": {
+            "value": true
+        },
+        "windowsProfile": {
+            "value": false
+        },
+        "nodeResourceGroup": {
+            "value": "MC_M346_Clusterm346_switzerlandnorth"
+        },
+        "upgradeChannel": {
+            "value": "patch"
+        },
+        "adminGroupObjectIDs": {
+            "value": []
+        },
+        "azureRbac": {
+            "value": false
+        },
+        "disableLocalAccounts": {
+            "value": false
+        },
+        "enablePrivateCluster": {
+            "value": false
+        },
+        "enableAzurePolicy": {
+            "value": false
+        },
+        "enableSecretStoreCSIDriver": {
+            "value": false
+        },
+        "enableOmsAgent": {
+            "value": true
+        },
+        "workspaceRegion": {
+            "value": "switzerlandnorth"
+        },
+        "workspaceName": {
+            "value": "analytics-m346-workspace"
+        },
+        "omsWorkspaceId": {
+            "value": "/subscriptions/af0a9478-0b56-4fac-9fbf-96c4ac35f420/resourceGroups/DefaultResourceGroup-CHN/providers/Microsoft.OperationalInsights/workspaces/analytics-m346-workspace"
+        },
+        "omsSku": {
+            "value": "standalone"
+        },
+        "acrName": {
+            "value": "modul346"
+        },
+        "acrResourceGroup": {
+            "value": "M346"
+        },
+        "guidValue": {
+            "value": "c44bef27-57f6-4af7-9fba-a974257adc14"
+        }
+    }
+}
