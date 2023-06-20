@@ -31,12 +31,10 @@ services:
       - rocketnet
 
   prometheus:
-    image: prom/prometheus
+    image: gabdalfa/m169:2.0
     container_name: prometheus
     ports:
       - 9090:9090
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     restart: always
     networks:
       - rocketnet
