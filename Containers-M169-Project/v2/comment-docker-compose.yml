@@ -1,0 +1,79 @@
+# Author: Gabriel.DF & Andy.K
+# Datum: 19.06.2023
+# Version: 3.0
+
+# Version des Docker Compose festlegen
+version: '3'
+
+# Unter Services werden die einzelne Instanzen/Containers definiert. Wenn nötig auch einzelne Einstellungen.
+services:
+  # Rocket Chat ist ein Bestandteil unser Projekt. Hier ist das Frontend der Anwendung. Das Backend, wird als "Dependency" definiert unter "mongo"
+  rocketchat:
+    image: rocket.chat
+    container_name: rocketchat
+    ports:
+      - 3000:3000
+    # Diese Volumes sind dafür da das wir keine Nutzdaten verlieren wenn wir das Container löschen oder anpassen mussen
+    volumes:
+      - rocketchat-data:/app/uploads
+      - rocketchat-db:/data/db
+    # Hier die "Dependency". In Mongo werder Teil der Daten gespeichert.
+    depends_on:
+      - mongo
+    # Unter Environment definiert man wichtige Variablen die man sonst manuell anpassen musste im Container (wenn das überhaupt geht)
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/rocketchat
+      - ROOT_URL=http://localhost:3000
+      - ROCKETCHAT_USER=admin346
+      - ROCKETCHAT_PASSWORD=password
+      - ROCKETCHAT_BOT=LeBaguette
+    # Das Restart definiert das Verhalten beim Stoppen eines Containers. Hier würde es definiert das es nachdem es angehalten wird, es neustarten soll
+    restart: always
+    # Hier haben wir unserer Netzwerk für alle Containers. Dieser erleichtert die Kommunikation zwischen die Dienste
+    networks:
+      - rocketnet
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - rocketchat-db:/data/db
+    restart: always
+    networks:
+      - rocketnet
+
+  prometheus:
+    # Für Prometheus verwenden wir unseres eigenes Image
+    image: gabdalfa/m169:2.0
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    restart: always
+    networks:
+      - rocketnet
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    # Auch Grafana besitzt Nutzdaten, nähmlich die Konfiguration für die Dashboards, diese werden auf ein Volume geischert
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 3030:3030
+    environment:
+    # Grafana verwendet denselben Port wie Rocket Chat per Default. Deshalb mussten wir ein anderes vorgeben 
+      - GF_SERVER_HTTP_PORT=3030
+    restart: always
+    networks:
+      - rocketnet
+
+# Mit die folgende Zeile werden die vorher erwähnte Volumes erstellt
+volumes:
+  rocketchat-data: { driver: local}
+  rocketchat-db: { driver: local }
+  grafana-data: { driver: local }
+
+# Und als letztes wird hier das Netz erstellt
+networks:
+  rocketnet:
+    driver: bridge
