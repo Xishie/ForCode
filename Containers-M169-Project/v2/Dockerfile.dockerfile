@@ -1,11 +1,11 @@
 # Prometheus base image
 FROM prom/prometheus
 
-# Prometheus donfig file to container
+# Prometheus config file auf dem Image laden
 COPY prometheus.yml /etc/prometheus/prometheus.yml
 
-# Open port
+# Port öffnen
 EXPOSE 9090
 
-# Start Prometheus
+# Prometheus starten
 CMD ["--config.file=/etc/prometheus/prometheus.yml"]
