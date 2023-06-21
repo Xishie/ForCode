@@ -1,3 +1,6 @@
+# Dieser File legt fest was für Containers betrieben werden. Dadurch weisst Prometheus und schlussendlich auch Grafana wonach es schauen soll.
+# Da werden die DNS Einträge verwendet um die Containers zu finden
+
 global:
   scrape_interval: 15s
 
